@@ -58,8 +58,7 @@ public class HouseApplicationTest
 
         // when
         Flux<House> receivedFlux = webClient.get().uri("/house").accept(MediaType.TEXT_EVENT_STREAM)
-                .retrieve().bodyToFlux(House.class);
-                //.exchange().flatMapMany(response -> response.bodyToFlux(House.class));
+                .exchange().flatMapMany(response -> response.bodyToFlux(House.class));
 
         // then
         StepVerifier.create(receivedFlux)
@@ -87,8 +86,8 @@ public class HouseApplicationTest
         // when
         Flux<House> receivedFlux = webClient.get().uri("/house-paged?page=1&size=2")
                 .accept(MediaType.TEXT_EVENT_STREAM)
-                .retrieve().bodyToFlux(House.class);
-                //.exchange().flatMapMany(response -> response.bodyToFlux(House.class));
+                //.retrieve().bodyToFlux(response -> response.bodyToFlux(House.class))
+                .exchange().flatMapMany(response -> response.bodyToFlux(House.class));
 
         // then
         StepVerifier.create(receivedFlux)

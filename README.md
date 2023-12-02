@@ -83,7 +83,7 @@
    THe network name must be specified
 
    THen, build these two images
-
+```
    $ docker-compose -f docker/docker-compose-mongo-spring-reactive.yml build
    [+] Building 46.9s (11/12)
    => [internal] load build definition from Dockerfile  0.0s
@@ -104,9 +104,9 @@
    => => exporting layers                                               0.1s
    => => writing image sha256:2922f64e3d709f5b7d0211a0e06cc38c00d9b8e8a2fabdea9c2a135fe4327db3   0.0s
    => => naming to docker.io/library/spring-boot-reactive-web-tpd
-
+```
 Run docker-compose
-
+```
     $ docker-compose -f docker/docker-compose-mongo-spring-reactive.yml up
 
 [+] Running 3/3
@@ -171,7 +171,7 @@ Run docker-compose
   docker-spring-boot-reactive-1  | 2023-03-22 02:03:41.918  INFO 1 --- [           main] c.t.reactiveweb.ReactiveWebApplication   : Started ReactiveWebApplication in 2.577 seconds (JVM running for 2.942)
   docker-mongo-1                 | 2023-03-22T02:03:41.964+0000 I NETWORK  [thread1] connection accepted from 172.19.0.2:35048 #5 (5 connections now open)
   docker-mongo-1                 | 2023-03-22T02:03:41.972+0000 I NETWORK  [conn5] received client metadata from 172.19.0.2:35048 conn5: { driver: { name: "mongo-java-driver|reactive-streams|spring-boot", version: "4.6.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "5.15.90.1-microsoft-standard-WSL2" }, platform: "Java/Oracle Corporation/15.0.2+7-27" }
-
+```
 
 Use mongosh to check data in MongoDB
 
@@ -179,7 +179,8 @@ C:\WinApp\MongoDBAtlasCLI>mongosh-1.6.2-win32-x64\bin\mongosh "mongodb+srv://clu
 Enter password: ************
 Current Mongosh Log ID: 63c9e3692e5640a5c5323914
 Connecting to:          mongodb+srv://<credentials>@cluster73852.xtjd8.mongodb.net/myFirstDatabase?appName=mongosh+1.6.2
-MongoServerSelectionError: connection <monitor> to 35.169.99.70:27017 closed
+
+#### MongoServerSelectionError: **connection <monitor> to 35.169.99.70:27017 closed**
 
 /c/WinApp/MongoDBAtlasCLI/mongosh-1.6.2-win32-x64/bin/mongosh "mongodb+srv://cluster73852.xtjd8.mongodb.net/test" --apiVersion 1 --username Cluster73852
 Enter password: ********
@@ -188,6 +189,20 @@ Connecting to:          mongodb+srv://<credentials>@cluster73852.xtjd8.mongodb.n
 Using MongoDB:          5.0.15 (API Version 1)
 Using Mongosh:          1.6.2
 For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+
+## 06/14/2023 
+  - Specify --username Cluster73852 and AlexGo!2 authentication failed
+  - don't use --username and w/o passworkd I can login successfully
+
+C:\WinApp\MongoDBAtlasCLI\mongosh-1.6.2-win32-x64\bin>mongosh.exe "mongodb+srv://cluster73852.xtjd8.mongodb.net/test" --apiVersion 1
+Current Mongosh Log ID: 6489e6af7a284cf14fef2ca9
+Connecting to:          mongodb+srv://cluster73852.xtjd8.mongodb.net/test?appName=mongosh+1.6.2
+Using MongoDB:          6.0.6 (API Version 1)
+Using Mongosh:          1.6.2
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
 
 Atlas atlas-zpgx4q-shard-0 [primary] test>
 
@@ -222,3 +237,8 @@ $ docker network dis/connect my-net my-container-name
 
 'host' network only works in Linux, not in Mac, nor Windows
 
+## 12/01/2023
+upgrade to springframe 3.1.2. but got repository default save() not found compiler error
+after google, change HouseMongoRepository.java to extend class
+ - new - ReactiveMongoRepository<House, String>
+ - old - ReactiveSortingRepository<House, String>

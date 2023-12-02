@@ -13,8 +13,11 @@ public class WebConfiguration {
 
         CorsConfiguration config = new CorsConfiguration();
 
+        // also can use annotation
+        // @CrossOrigin(origins = "*") allowed all domain
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 

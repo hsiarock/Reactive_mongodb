@@ -6,12 +6,15 @@ import com.kph.demo.house.repository.HouseMongoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @RestController
 @Slf4j
@@ -23,6 +26,15 @@ public class HouseController {
 
     public HouseController(final HouseMongoRepository houseMongoRepository) {
         this.houseMongoRepository = houseMongoRepository;
+    }
+
+    @PostMapping(value = { "/save", "/"})
+    @ResponseStatus(code = HttpStatus.CREATED)
+    //@ResponseBody --> if use @RestController, included as default! So, no need it here
+    public Mono<String> save(@RequestBody House house) {
+        log.info("Saving a house object to db");
+        house.setCreDateTime(LocalDateTime.now(ZoneId.of("America/New_York")));
+        return houseMongoRepository.save(house).map(h -> "saved: " + h.getAddress());
     }
 
     /*
