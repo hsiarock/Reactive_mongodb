@@ -30,9 +30,11 @@ public final class House {
     private int bed;
     private int bath; // div by 10, e.g. 15=1.5, 50=5
     private int sqft;
+    private int dayOnMarket; // from creDateTime, i.e. enter date
     private int price;
     private LocalDateTime creDateTime;
     private LocalDateTime openHouse;
+
     private String descUrl;
     private String status; // Active, Sold, Pending, Inactive, Unknown
 }

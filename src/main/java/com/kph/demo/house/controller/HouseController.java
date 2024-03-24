@@ -32,7 +32,7 @@ public class HouseController {
     @ResponseStatus(code = HttpStatus.CREATED)
     //@ResponseBody --> if use @RestController, included as default! So, no need it here
     public Mono<String> save(@RequestBody House house) {
-        log.info("Saving a house object to db");
+        log.info("Saving a house object to db: " + house.getAddress());
         house.setCreDateTime(LocalDateTime.now(ZoneId.of("America/New_York")));
         return houseMongoRepository.save(house).map(h -> "saved: " + h.getAddress());
     }
